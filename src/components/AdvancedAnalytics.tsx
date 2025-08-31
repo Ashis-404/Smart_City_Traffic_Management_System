@@ -1,31 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-  ChartOptions,
-  ChartData
-} from 'chart.js';
+import Chart from 'chart.js/auto';
 import { trafficService, Intersection } from '../services/trafficService';
 import { TrafficPredictionService } from '../services/trafficPredictionService';
-
-// Register Chart.js components
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
 
 interface WaitTimeData {
   intersectionId: string;
@@ -85,14 +61,14 @@ export function AdvancedAnalytics() {
   };
 
   useEffect(() => {
-    let trafficChart: ChartJS | null = null;
-    let waitTimeChart: ChartJS | null = null;
-    let predictionChart: ChartJS | null = null;
+    let trafficChart: Chart | null = null;
+    let waitTimeChart: Chart | null = null;
+    let predictionChart: Chart | null = null;
 
     const initializeCharts = () => {
       if (trafficChartRef.current && waitTimeChartRef.current && predictionChartRef.current) {
         // Traffic Flow Chart
-        trafficChart = new ChartJS(trafficChartRef.current, {
+        trafficChart = new Chart(trafficChartRef.current, {
           type: 'line',
           data: {
             labels: analyticsData.timeLabels,
@@ -263,7 +239,7 @@ export function AdvancedAnalytics() {
         });
 
         // Traffic Prediction Chart
-        predictionChart = new ChartJS(predictionChartRef.current, {
+        predictionChart = new Chart(predictionChartRef.current, {
           type: 'line',
           data: {
             labels: analyticsData.timeLabels,
@@ -394,7 +370,7 @@ export function AdvancedAnalytics() {
         });
 
         // Wait Time Analysis Chart
-        waitTimeChart = new ChartJS(waitTimeChartRef.current, {
+        waitTimeChart = new Chart(waitTimeChartRef.current, {
           type: 'line',
           data: {
             labels: analyticsData.timeLabels,
