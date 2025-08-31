@@ -164,6 +164,6 @@ export function EmergencyControl({ onEmergencyToggle }: EmergencyControlProps) {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>
+  );
 }
