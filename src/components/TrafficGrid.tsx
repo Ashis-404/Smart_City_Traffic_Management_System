@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { MapPin, Wifi, Signal } from 'lucide-react';
+import { getRouteIntersections } from '../services/emergencyRoutes';
 
 interface TrafficGridProps {
   emergencyMode: boolean;
+  emergencyRoute?: string;
 }
 
 interface TrafficLight {
@@ -15,21 +17,38 @@ interface TrafficLight {
   adaptiveMode: boolean;
 }
 
-export function TrafficGrid({ emergencyMode }: TrafficGridProps) {
-  const [trafficLights, setTrafficLights] = useState<TrafficLight[]>([
-    { id: 'Traffic Light 1', intersection: 'Main & Broadway', currentPhase: 'green', timeRemaining: 35, sensorStatus: 'online', vehicleCount: 12, adaptiveMode: true },
-    { id: 'Traffic Light 2', intersection: 'Central & 5th', currentPhase: 'red', timeRemaining: 28, sensorStatus: 'online', vehicleCount: 28, adaptiveMode: true },
-    { id: 'Traffic Light 3', intersection: 'Park & Oak', currentPhase: 'green', timeRemaining: 42, sensorStatus: 'online', vehicleCount: 8, adaptiveMode: false },
-    { id: 'Traffic Light 4', intersection: 'Market & Union', currentPhase: 'red', timeRemaining: 15, sensorStatus: 'maintenance', vehicleCount: 45, adaptiveMode: true },
-    { id: 'Traffic Light 5', intersection: 'River & Pine', currentPhase: 'yellow', timeRemaining: 5, sensorStatus: 'online', vehicleCount: 15, adaptiveMode: true },
-    { id: 'Traffic Light 6', intersection: 'Downtown Hub', currentPhase: 'green', timeRemaining: 60, sensorStatus: 'offline', vehicleCount: 34, adaptiveMode: false }
-  ]);
+export function TrafficGrid({ emergencyMode, emergencyRoute }: TrafficGridProps) {
+  const priorityIntersections = useMemo(() => {
+    if (!emergencyMode || !emergencyRoute) return new Set<string>();
+    return new Set(getRouteIntersections(emergencyRoute));
+  }, [emergencyMode, emergencyRoute]);
+  const [trafficLights, setTrafficLights] = useState<TrafficLight[]>(() => {
+    // Get persisted adaptive mode states from localStorage
+    const savedAdaptiveStates = JSON.parse(localStorage.getItem('adaptiveModeStates') || '{}');
+    
+    // Initial traffic lights with persisted adaptive mode states
+    const initialLights: TrafficLight[] = [
+      { id: 'Traffic Light 1', intersection: 'Main & Broadway', currentPhase: 'green' as const, timeRemaining: 35, sensorStatus: 'online', vehicleCount: 12, adaptiveMode: false },
+      { id: 'Traffic Light 2', intersection: 'Central & 5th', currentPhase: 'red' as const, timeRemaining: 28, sensorStatus: 'online', vehicleCount: 28, adaptiveMode: false },
+      { id: 'Traffic Light 3', intersection: 'Park & Oak', currentPhase: 'green' as const, timeRemaining: 42, sensorStatus: 'online', vehicleCount: 8, adaptiveMode: false },
+      { id: 'Traffic Light 4', intersection: 'Market & Union', currentPhase: 'red' as const, timeRemaining: 15, sensorStatus: 'maintenance', vehicleCount: 45, adaptiveMode: false },
+      { id: 'Traffic Light 5', intersection: 'River & Pine', currentPhase: 'yellow' as const, timeRemaining: 5, sensorStatus: 'online', vehicleCount: 15, adaptiveMode: false },
+      { id: 'Traffic Light 6', intersection: 'Downtown Hub', currentPhase: 'green' as const, timeRemaining: 60, sensorStatus: 'offline', vehicleCount: 34, adaptiveMode: false }
+    ];
+
+    // Apply saved adaptive mode states
+    return initialLights.map(light => ({
+      ...light,
+      adaptiveMode: savedAdaptiveStates[light.id] || false
+    }));
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
       setTrafficLights(prev => prev.map(light => {
         let newTimeRemaining = light.timeRemaining - 1;
         let newPhase = light.currentPhase;
+        let newVehicleCount = Math.max(0, light.vehicleCount + Math.floor(Math.random() * 6 - 3));
 
         if (newTimeRemaining <= 0) {
           if (light.currentPhase === 'green') {
@@ -37,10 +56,28 @@ export function TrafficGrid({ emergencyMode }: TrafficGridProps) {
             newTimeRemaining = 5;
           } else if (light.currentPhase === 'yellow') {
             newPhase = 'red';
-            newTimeRemaining = emergencyMode ? 15 : Math.floor(Math.random() * 40 + 20);
+            const isPriorityIntersection = priorityIntersections.has(light.id);
+            
+            if (isPriorityIntersection && emergencyMode) {
+              // Shorter red light for priority intersections
+              newTimeRemaining = 10;
+            } else if (light.adaptiveMode) {
+              newTimeRemaining = emergencyMode ? 15 : Math.min(60, Math.max(20, Math.floor(newVehicleCount * 1.5)));
+            } else {
+              newTimeRemaining = emergencyMode ? 15 : Math.floor(Math.random() * 40 + 20);
+            }
           } else {
             newPhase = 'green';
-            newTimeRemaining = emergencyMode ? 20 : Math.floor(Math.random() * 50 + 30);
+            const isPriorityIntersection = priorityIntersections.has(light.id);
+            
+            if (isPriorityIntersection && emergencyMode) {
+              // Longer green light for priority intersections
+              newTimeRemaining = 45;
+            } else if (light.adaptiveMode) {
+              newTimeRemaining = emergencyMode ? 20 : Math.min(90, Math.max(30, Math.floor(newVehicleCount * 2)));
+            } else {
+              newTimeRemaining = emergencyMode ? 20 : Math.floor(Math.random() * 50 + 30);
+            }
           }
         }
 
@@ -48,7 +85,7 @@ export function TrafficGrid({ emergencyMode }: TrafficGridProps) {
           ...light,
           currentPhase: newPhase,
           timeRemaining: newTimeRemaining,
-          vehicleCount: Math.max(0, light.vehicleCount + Math.floor(Math.random() * 6 - 3))
+          vehicleCount: newVehicleCount
         };
       }));
     }, 1000);
@@ -60,6 +97,10 @@ export function TrafficGrid({ emergencyMode }: TrafficGridProps) {
     setTrafficLights(prev => prev.map(light => 
       light.id === id ? { ...light, adaptiveMode: !light.adaptiveMode } : light
     ));
+    // Persist adaptive mode state to localStorage
+    const adaptiveModeStates = JSON.parse(localStorage.getItem('adaptiveModeStates') || '{}');
+    adaptiveModeStates[id] = !adaptiveModeStates[id];
+    localStorage.setItem('adaptiveModeStates', JSON.stringify(adaptiveModeStates));
   };
 
   const getPhaseColor = (phase: string) => {
@@ -92,8 +133,12 @@ export function TrafficGrid({ emergencyMode }: TrafficGridProps) {
           {trafficLights.map((light) => (
             <div
               key={light.id}
-              className={`bg-gray-900 rounded-lg p-4 border border-gray-700 hover:border-gray-600 transition-all duration-300 ${
-                emergencyMode ? 'animate-pulse' : 'hover:scale-105'
+              className={`bg-gray-900 rounded-lg p-4 border transition-all duration-300 ${
+                emergencyMode && priorityIntersections.has(light.id)
+                  ? 'border-red-600 shadow-lg shadow-red-900/50'
+                  : emergencyMode
+                  ? 'border-amber-700 animate-pulse'
+                  : 'border-gray-700 hover:border-gray-600 hover:scale-105'
               }`}
             >
               <div className="flex items-center justify-between mb-3">

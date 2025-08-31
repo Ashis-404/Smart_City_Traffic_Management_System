@@ -8,17 +8,21 @@ import { EmergencyControl } from './components/EmergencyControl';
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [emergencyMode, setEmergencyMode] = useState(false);
+  const [emergencyRoute, setEmergencyRoute] = useState('');
 
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
         return <Dashboard emergencyMode={emergencyMode} />;
       case 'traffic':
-        return <TrafficGrid emergencyMode={emergencyMode} />;
+        return <TrafficGrid emergencyMode={emergencyMode} emergencyRoute={emergencyRoute} />;
       case 'environment':
         return <EnvironmentalMonitoring />;
       case 'emergency':
-        return <EmergencyControl onEmergencyToggle={setEmergencyMode} />;
+        return <EmergencyControl onEmergencyToggle={(active, route) => {
+          setEmergencyMode(active);
+          setEmergencyRoute(route || '');
+        }} />;
       default:
         return <Dashboard emergencyMode={emergencyMode} />;
     }

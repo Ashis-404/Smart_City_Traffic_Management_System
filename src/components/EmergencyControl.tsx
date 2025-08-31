@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { AlertTriangle, Siren, Route, Phone } from 'lucide-react';
 
 interface EmergencyControlProps {
-  onEmergencyToggle: (active: boolean) => void;
+  onEmergencyToggle: (active: boolean, priorityRoute?: string) => void;
 }
 
 export function EmergencyControl({ onEmergencyToggle }: EmergencyControlProps) {
@@ -26,13 +26,20 @@ export function EmergencyControl({ onEmergencyToggle }: EmergencyControlProps) {
     }
   });
 
-  // ✅ Persist + notify parent whenever the active flag changes
+  const [routeDetails, setRouteDetails] = useState<{[key: string]: string[]}>({
+    'Hospital Route A - Central to General Hospital': ['Main & Broadway', 'Central & 5th', 'Market & Union'],
+    'Fire Station Route B - Downtown to Industrial': ['Downtown Hub', 'River & Pine', 'Park & Oak'],
+    'Police Route C - Precinct to Highway Access': ['Central & 5th', 'Market & Union', 'River & Pine'],
+    'Ambulance Route D - Medical Center to Airport': ['Park & Oak', 'Main & Broadway', 'Downtown Hub']
+  });
+
+  // ✅ Persist + notify parent whenever the active flag or route changes
   useEffect(() => {
     try {
       localStorage.setItem('emergencyActive', JSON.stringify(emergencyActive));
     } catch {}
-    onEmergencyToggle(emergencyActive);
-  }, [emergencyActive, onEmergencyToggle]);
+    onEmergencyToggle(emergencyActive, emergencyRoute);
+  }, [emergencyActive, emergencyRoute, onEmergencyToggle]);
 
   // ✅ Persist route when it changes
   useEffect(() => {
@@ -107,20 +114,36 @@ export function EmergencyControl({ onEmergencyToggle }: EmergencyControlProps) {
 
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-300">
-                Emergency Route
+                Priority Route Selection
               </label>
               <select
                 value={emergencyRoute}
                 onChange={(e) => setEmergencyRoute(e.target.value)}
-                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white"
+                className={`w-full border rounded-lg px-3 py-2 text-white transition-all duration-200 ${
+                  emergencyActive 
+                    ? 'bg-gray-900 border-red-600 focus:ring-2 focus:ring-red-500' 
+                    : 'bg-gray-700 border-gray-600'
+                }`}
                 disabled={!emergencyActive}
                 aria-label="Select emergency route"
               >
-                <option value="">Select Emergency Route</option>
+                <option value="">Select Priority Route</option>
                 {emergencyRoutes.map((route, index) => (
                   <option key={index} value={route}>{route}</option>
                 ))}
               </select>
+              {emergencyRoute && emergencyActive && (
+                <div className="mt-2 text-sm">
+                  <span className="text-red-400">Priority Route Active: </span>
+                  <span className="text-white">{emergencyRoute}</span>
+                  <div className="mt-1">
+                    <span className="text-gray-400 text-xs">Priority Intersections: </span>
+                    <span className="text-xs text-gray-300">
+                      {routeDetails[emergencyRoute]?.join(' → ')}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -129,31 +152,47 @@ export function EmergencyControl({ onEmergencyToggle }: EmergencyControlProps) {
             
             {emergencyActive ? (
               <div className="space-y-3">
-                <div className="bg-gray-900 rounded-lg p-3 border border-red-600">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-white">AMBULANCE-001</p>
-                      <p className="text-sm text-gray-400">ETA: 3 minutes</p>
+                {emergencyRoute ? (
+                  <>
+                    <div className="bg-red-900/20 border border-red-600 rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <div>
+                          <p className="text-white font-medium">Emergency Vehicle En Route</p>
+                          <p className="text-sm text-red-400">Priority Route Active</p>
+                        </div>
+                        <div className="flex items-center">
+                          <Route className="h-5 w-5 text-red-400 mr-2" />
+                          <span className="text-red-400 animate-pulse">●</span>
+                        </div>
+                      </div>
+                      <p className="text-sm text-gray-300 mt-2">
+                        Traffic signals optimized for emergency route
+                      </p>
                     </div>
-                    <div className="flex items-center">
-                      <Route className="h-4 w-4 text-red-400 mr-2" />
-                      <span className="text-red-400 font-medium">Priority 1</span>
+                    
+                    <div className="bg-gray-900 rounded-lg p-3 border border-red-600">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium text-white">EMERGENCY-001</p>
+                          <p className="text-sm text-gray-400">Route: {emergencyRoute.split(' - ')[0]}</p>
+                        </div>
+                        <div className="flex items-center">
+                          <Route className="h-4 w-4 text-red-400 mr-2" />
+                          <span className="text-red-400 font-medium">Priority Active</span>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="bg-amber-900/20 border border-amber-600 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <p className="text-amber-400 text-sm">
+                        No priority route selected. Select a route to optimize traffic flow.
+                      </p>
+                      <Route className="h-5 w-5 text-amber-400" />
                     </div>
                   </div>
-                </div>
-                
-                <div className="bg-gray-900 rounded-lg p-3 border border-amber-600">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-white">FIRE-TRUCK-005</p>
-                      <p className="text-sm text-gray-400">ETA: 7 minutes</p>
-                    </div>
-                    <div className="flex items-center">
-                      <Route className="h-4 w-4 text-amber-400 mr-2" />
-                      <span className="text-amber-400 font-medium">Priority 2</span>
-                    </div>
-                  </div>
-                </div>
+                )}
               </div>
             ) : (
               <div className="text-center py-8 text-gray-400">
