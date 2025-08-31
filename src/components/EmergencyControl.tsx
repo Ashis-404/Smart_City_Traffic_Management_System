@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AlertTriangle, Siren, Route, Phone } from 'lucide-react';
 
 interface EmergencyControlProps {
@@ -6,17 +6,47 @@ interface EmergencyControlProps {
 }
 
 export function EmergencyControl({ onEmergencyToggle }: EmergencyControlProps) {
-  const [emergencyActive, setEmergencyActive] = useState(false);
-  const [emergencyRoute, setEmergencyRoute] = useState('');
+  // ✅ Initialize from localStorage synchronously (no flicker / no overwrite)
+  const [emergencyActive, setEmergencyActive] = useState<boolean>(() => {
+    try {
+      if (typeof window === 'undefined') return false;
+      const raw = localStorage.getItem('emergencyActive');
+      return raw ? JSON.parse(raw) === true : false;
+    } catch {
+      return false;
+    }
+  });
+
+  const [emergencyRoute, setEmergencyRoute] = useState<string>(() => {
+    try {
+      if (typeof window === 'undefined') return '';
+      return localStorage.getItem('emergencyRoute') ?? '';
+    } catch {
+      return '';
+    }
+  });
+
+  // ✅ Persist + notify parent whenever the active flag changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('emergencyActive', JSON.stringify(emergencyActive));
+    } catch {}
+    onEmergencyToggle(emergencyActive);
+  }, [emergencyActive, onEmergencyToggle]);
+
+  // ✅ Persist route when it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('emergencyRoute', emergencyRoute);
+    } catch {}
+  }, [emergencyRoute]);
 
   const activateEmergency = () => {
     setEmergencyActive(true);
-    onEmergencyToggle(true);
   };
 
   const deactivateEmergency = () => {
     setEmergencyActive(false);
-    onEmergencyToggle(false);
     setEmergencyRoute('');
   };
 
