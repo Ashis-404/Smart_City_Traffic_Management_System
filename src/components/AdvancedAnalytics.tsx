@@ -12,7 +12,6 @@ import {
   ChartOptions,
   ChartData
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
 import { trafficService, Intersection } from '../services/trafficService';
 import { TrafficPredictionService } from '../services/trafficPredictionService';
 
