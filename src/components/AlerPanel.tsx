@@ -168,7 +168,13 @@ export function AlertPanel({ emergencyMode }: AlertPanelProps) {
   // Filter alerts based on current filter and showResolved state
   const filteredAlerts = alerts
     .filter(alert => filter === 'all' || alert.category === filter)
-    .filter(alert => showResolved || !alert.resolved)
+    .filter(alert => {
+      if (showResolved) {
+        return alert.resolved; // Show only resolved alerts when showResolved is true
+      } else {
+        return !alert.resolved; // Show only unresolved alerts when showResolved is false
+      }
+    })
     .sort((a, b) => {
       // Sort by priority first
       if (a.priority !== b.priority) return a.priority - b.priority;
@@ -199,12 +205,13 @@ export function AlertPanel({ emergencyMode }: AlertPanelProps) {
           </select>
           <button
             onClick={() => setShowResolved(!showResolved)}
-            className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${
-              showResolved ? 'bg-cyan-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            className={`px-3 py-1.5 rounded-lg text-sm transition-colors flex items-center space-x-1 ${
+              showResolved ? 'bg-emerald-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
             }`}
-            title="Toggle resolved alerts"
+            title={showResolved ? "Showing resolved alerts" : "Show resolved alerts"}
           >
-            Show Resolved
+            <CheckCircle className={`h-4 w-4 ${showResolved ? 'text-white' : 'text-emerald-400'}`} />
+            <span>{showResolved ? 'Showing Resolved' : 'Show Resolved'}</span>
           </button>
         </div>
       </div>
@@ -213,7 +220,13 @@ export function AlertPanel({ emergencyMode }: AlertPanelProps) {
         {filteredAlerts.length === 0 ? (
           <div className="text-center py-8 text-gray-400">
             <CheckCircle className="h-8 w-8 mx-auto mb-2" />
-            <p>No alerts match your filters</p>
+            <p>
+              {showResolved 
+                ? 'No resolved alerts to show' 
+                : filter === 'all' 
+                  ? 'No active alerts' 
+                  : `No active ${filter} alerts`}
+            </p>
           </div>
         ) : (
           filteredAlerts.map((alert) => (
