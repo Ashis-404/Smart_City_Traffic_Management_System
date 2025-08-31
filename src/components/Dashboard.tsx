@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { MetricCard } from './MetricCard';
 import { TrafficStatus } from './TrafficStatus';
 import { AlertPanel } from './AlerPanel';
+import { AdvancedAnalytics } from './AdvancedAnalytics';
 import { Car, Clock, Zap, TrendingDown } from 'lucide-react';
 
 interface DashboardProps {
@@ -64,12 +65,48 @@ export function Dashboard({ emergencyMode }: DashboardProps) {
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
           <TrafficStatus emergencyMode={emergencyMode} />
         </div>
         <div>
           <AlertPanel emergencyMode={emergencyMode} />
+        </div>
+      </div>
+
+      {/* Advanced Analytics Section */}
+      <div className="mt-6">
+        <AdvancedAnalytics />
+      </div>
+
+      {/* AI Recommendations */}
+      <div className="mt-6 bg-gray-800 rounded-xl p-6">
+        <h2 className="text-xl font-semibold text-white mb-4">AI Traffic Recommendations</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {metrics.signalEfficiency < 80 && (
+            <div className="bg-amber-900/50 rounded-lg p-4">
+              <h3 className="text-lg font-semibold text-white">Signal Timing Adjustment</h3>
+              <p className="text-gray-300">
+                Consider increasing green light duration for north-south traffic during peak hours.
+              </p>
+            </div>
+          )}
+          {metrics.avgWaitTime > 45 && (
+            <div className="bg-red-900/50 rounded-lg p-4">
+              <h3 className="text-lg font-semibold text-white">Congestion Alert</h3>
+              <p className="text-gray-300">
+                High wait times detected. Implementing emergency traffic flow patterns recommended.
+              </p>
+            </div>
+          )}
+          {metrics.emissionReduction < 20 && (
+            <div className="bg-emerald-900/50 rounded-lg p-4">
+              <h3 className="text-lg font-semibold text-white">Environmental Impact</h3>
+              <p className="text-gray-300">
+                Optimize signal timing to reduce vehicle idle time and improve air quality.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
