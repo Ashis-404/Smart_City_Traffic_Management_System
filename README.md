@@ -159,7 +159,7 @@ This project was developed for IOTricity S02 with the goal of creating an innova
 | Prattyan Ghosh | Team Lead | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/prattyanghosh/) | [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat&logo=github)](https://github.com/prattyan) |
 | Ashis Mahato | Frontend Developer | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/ashis-mahato-9733332b8/) | [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat&logo=github)](https://github.com/Ashis-404) |
 | Arnab Ghosh | Backend Developer | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/arnab-ghosh-854854289/) | [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat&logo=github)](https://github.com/arnabg2005) |
-| Aritra Debnath | UI/UX Designer | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/aritra-debnath-a54bb2246/) | [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat&logo=github)](https://github.com/AritraDeb05) |
+| Aritra Debnath | UI/UX Designer | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/aritradeb07/) | [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat&logo=github)](https://github.com/AritraDeb05) |
 | Debasmita Deb | Data Scientist | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/debasmita-deb-7883392b8/) | [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat&logo=github)](#) |
 
 
