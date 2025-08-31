@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { MetricCard } from './MetricCard';
 import { TrafficStatus } from './TrafficStatus';
 import { AlertPanel } from './AlerPanel';
-import { AdvancedAnalytics } from './AdvancedAnalytics';
+import AdvancedAnalytics from "./AdvancedAnalytics";
+
 import { Car, Clock, Zap, TrendingDown } from 'lucide-react';
 
 interface DashboardProps {
