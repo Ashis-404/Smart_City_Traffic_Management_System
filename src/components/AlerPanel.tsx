@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AlertTriangle, Clock, CheckCircle, X, BellRing, Activity } from 'lucide-react';
+import './AlertPanel.css';
 
 interface AlertPanelProps {
   emergencyMode: boolean;
@@ -208,7 +209,7 @@ export function AlertPanel({ emergencyMode }: AlertPanelProps) {
         </div>
       </div>
 
-      <div className="space-y-3 flex-1 overflow-y-auto custom-scrollbar">
+      <div className="space-y-3 flex-1 alerts-container custom-scrollbar">
         {filteredAlerts.length === 0 ? (
           <div className="text-center py-8 text-gray-400">
             <CheckCircle className="h-8 w-8 mx-auto mb-2" />

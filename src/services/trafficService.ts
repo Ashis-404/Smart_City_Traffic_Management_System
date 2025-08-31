@@ -1,35 +1,64 @@
 // src/services/trafficService.ts
 
-// Define the response structure for analytics
-interface AnalyticsResponse {
-  vehicleCounts: number[];
-  avgWaitTimes: number[];
-  timeLabels: string[];
+export interface Intersection {
+  id: string;
+  name: string;
+  vehicles: number;
+  status: "optimal" | "congested" | "critical";
+  avgSpeed: number;
 }
 
-// Example service object with named export
-export const trafficService = {
-  async getAnalytics(): Promise<AnalyticsResponse> {
-    try {
-      // 👉 Replace with your real API call if available
-      // Example using fetch:
-      // const res = await fetch("/api/analytics");
-      // const data = await res.json();
-      // return data;
+export interface Metrics {
+  totalVehicles: number;
+  signalEfficiency: number;
+}
 
-      // Mock Data (for testing without backend)
-      return {
-        vehicleCounts: [120, 150, 180, 200],
-        avgWaitTimes: [30, 25, 28, 22],
-        timeLabels: ["8 AM", "9 AM", "10 AM", "11 AM"]
-      };
-    } catch (error) {
-      console.error("Error fetching analytics:", error);
-      return {
-        vehicleCounts: [],
-        avgWaitTimes: [],
-        timeLabels: []
-      };
-    }
+export const trafficService = {
+  // Return current metrics
+  getMetrics: async (): Promise<Metrics> => {
+    // Simulate API delay
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    // Mocked metrics data
+    return {
+      totalVehicles: Math.floor(Math.random() * 100) + 20,
+      signalEfficiency: Math.floor(Math.random() * 100)
+    };
+  },
+
+  // Return list of intersections
+  getIntersections: async (): Promise<Intersection[]> => {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    const statuses: Intersection["status"][] = ["optimal", "congested", "critical"];
+    const intersections: Intersection[] = Array.from({ length: 6 }, (_, i) => ({
+      id: i.toString(),
+      name: `Intersection ${i + 1}`,
+      vehicles: Math.floor(Math.random() * 50) + 5,
+      avgSpeed: Math.floor(Math.random() * 60) + 20,
+      status: statuses[Math.floor(Math.random() * statuses.length)]
+    }));
+
+    return intersections;
+  },
+
+  // Optional: Return analytics for chart initialization
+  getAnalytics: async (): Promise<{
+    timeLabels: string[];
+    vehicleCounts: number[];
+    avgWaitTimes: number[];
+  }> => {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    const timeLabels = Array.from({ length: 10 }, (_, i) => {
+      const d = new Date();
+      d.setMinutes(d.getMinutes() - (10 - i) * 2); // last 20 minutes
+      return d.toLocaleTimeString();
+    });
+
+    const vehicleCounts = Array.from({ length: 10 }, () => Math.floor(Math.random() * 100) + 20);
+    const avgWaitTimes = Array.from({ length: 10 }, () => Math.floor(Math.random() * 60) + 10);
+
+    return { timeLabels, vehicleCounts, avgWaitTimes };
   }
 };
