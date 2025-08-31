@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AlertTriangle, Clock, CheckCircle, X, Filter, BellRing, Activity } from 'lucide-react';
+import { AlertTriangle, Clock, CheckCircle, X, BellRing, Activity } from 'lucide-react';
 
 interface AlertPanelProps {
   emergencyMode: boolean;
