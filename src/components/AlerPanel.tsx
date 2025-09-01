@@ -216,7 +216,12 @@ export function AlertPanel({ emergencyMode }: AlertPanelProps) {
         </div>
       </div>
 
-      <div className="space-y-3 flex-1 alerts-container custom-scrollbar">
+      <div 
+        className="space-y-3 flex-1 alerts-container custom-scrollbar"
+        role="log"
+        aria-live="polite"
+        aria-label="System alerts feed"
+      >
         {filteredAlerts.length === 0 ? (
           <div className="text-center py-8 text-gray-400">
             <CheckCircle className="h-8 w-8 mx-auto mb-2" />

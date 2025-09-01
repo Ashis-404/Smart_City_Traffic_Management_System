@@ -24,6 +24,12 @@
 
 .alerts-container {
   max-height: calc(100vh - 280px);
+  min-height: 400px;
   overflow-y: auto;
   padding-right: 6px;
+  overflow-x: hidden;
+  scroll-behavior: smooth; /* Smooth scrolling on modern browsers */
+  will-change: scroll-position; /* Optimize scrolling performance */
+  contain: paint; /* Improve scrolling performance */
+  overscroll-behavior: contain; /* Prevent scroll chain to parent */
 }

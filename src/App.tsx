@@ -35,7 +35,7 @@ function App() {
         setActiveTab={setActiveTab}
         emergencyMode={emergencyMode}
       />
-      <main className="container mx-auto px-4 py-6">
+      <main className="container mx-auto px-2 sm:px-4 py-4 sm:py-6 max-w-full lg:max-w-7xl">
         {renderContent()}
       </main>
     </div>

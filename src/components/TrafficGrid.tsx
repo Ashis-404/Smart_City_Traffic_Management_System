@@ -123,13 +123,13 @@ export function TrafficGrid({ emergencyMode, emergencyRoute }: TrafficGridProps)
 
   return (
     <div className="space-y-6">
-      <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-        <h2 className="text-xl font-bold text-white mb-6 flex items-center">
-          <Signal className="h-5 w-5 mr-2 text-cyan-400" />
+      <div className="bg-gray-800 rounded-lg sm:rounded-xl p-3 sm:p-6 border border-gray-700">
+        <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6 flex items-center">
+          <Signal className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-cyan-400" />
           Traffic Signal Control Grid
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {trafficLights.map((light) => (
             <div
               key={light.id}
@@ -141,12 +141,12 @@ export function TrafficGrid({ emergencyMode, emergencyRoute }: TrafficGridProps)
                   : 'border-gray-700 hover:border-gray-600 hover:scale-105'
               }`}
             >
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-2 sm:mb-3">
                 <div className="flex items-center">
-                  <MapPin className="h-4 w-4 mr-2 text-gray-400" />
-                  <span className="text-sm font-medium text-white">{light.intersection}</span>
+                  <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2 text-gray-400" />
+                  <span className="text-xs sm:text-sm font-medium text-white truncate">{light.intersection}</span>
                 </div>
-                <span className="text-xs text-gray-500">{light.id}</span>
+                <span className="text-[10px] sm:text-xs text-gray-500 ml-2">{light.id}</span>
               </div>
 
               {/* Traffic Light Visual */}
@@ -180,10 +180,10 @@ export function TrafficGrid({ emergencyMode, emergencyRoute }: TrafficGridProps)
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-gray-700">
+              <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-700">
                 <button
                   onClick={() => toggleAdaptiveMode(light.id)}
-                  className={`w-full px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`w-full px-2 sm:px-3 py-1.5 sm:py-2 rounded text-xs sm:text-sm font-medium transition-all duration-200 ${
                     light.adaptiveMode
                       ? 'bg-cyan-600 text-white hover:bg-cyan-700'
                       : 'bg-gray-700 text-gray-300 hover:bg-gray-600'

@@ -66,14 +66,14 @@ export function EmergencyControl({ onEmergencyToggle }: EmergencyControlProps) {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-        <h2 className="text-xl font-bold text-white mb-6 flex items-center">
-          <AlertTriangle className="h-5 w-5 mr-2 text-red-400" />
+      <div className="bg-gray-800 rounded-lg sm:rounded-xl p-3 sm:p-6 border border-gray-700">
+        <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6 flex items-center">
+          <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-red-400" />
           Emergency Vehicle Control
         </h2>
 
         {/* Emergency Status */}
-        <div className={`p-6 rounded-lg border-2 mb-6 transition-all duration-300 ${
+        <div className={`p-3 sm:p-6 rounded-lg border-2 mb-4 sm:mb-6 transition-all duration-300 ${
           emergencyActive 
             ? 'border-red-600 bg-red-900/20 animate-pulse' 
             : 'border-gray-600 bg-gray-900/50'
@@ -90,9 +90,9 @@ export function EmergencyControl({ onEmergencyToggle }: EmergencyControlProps) {
         </div>
 
         {/* Emergency Controls */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">Quick Actions</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          <div className="space-y-3 sm:space-y-4">
+            <h3 className="text-base sm:text-lg font-semibold text-white">Quick Actions</h3>
             
             {!emergencyActive ? (
               <button

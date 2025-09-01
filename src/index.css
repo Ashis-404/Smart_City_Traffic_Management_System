@@ -2,3 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile-first responsive styles */
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply antialiased text-base sm:text-base;
+  }
+}
+
+/* Custom scrollbar styles */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.3);
+  border-radius: 3px;
+}
+
+/* Responsive container */
+.container {
+  @apply px-2 sm:px-4 md:px-6;
+  max-width: 100%;
+}
+
+@screen lg {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/* Transitions */
+.transition-all {
+  @apply duration-200 ease-in-out;
+}
+
+/* Mobile touch targets */
+@screen sm {
+  button, 
+  [role="button"],
+  select,
+  input {
+    @apply min-h-[44px];
+  }
+}
+
+/* Safe area insets for modern mobile browsers */
+@supports(padding: max(0px)) {
+  .safe-bottom {
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+  
+  .safe-top {
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+  }
+}
