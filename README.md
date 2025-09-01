@@ -134,7 +134,12 @@ yarn dev
 - Mobile app for field operators
 - Public transit system integration
 - Weather-based traffic optimization
-- IoT sensor integration
+- IoT sensor integration with Arduino 
+
+## 📚 Technical Documentation
+
+### Hardware Integration
+- Arduino Documentation for IoT Sensors: [Arduino Uno Rev3 Documentation](https://drive.google.com/file/d/1NaLPZ5kibx62S73taRf-cOHzrMPYV8tZ/view?usp=sharing)
 
 ## 🤝 Contributing
 
