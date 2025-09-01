@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Shield, Activity, Leaf, AlertTriangle, Menu, X } from 'lucide-react';
 
 interface HeaderProps {
