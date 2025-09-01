@@ -98,6 +98,7 @@ export function AlertPanel({ emergencyMode }: AlertPanelProps) {
     return () => clearInterval(interval);
   }, []);
 
+
   const getRandomMessage = () => {
     const messages = [
       'Traffic congestion detected',

@@ -245,7 +245,7 @@ export function TrafficStatus({ emergencyMode }: TrafficStatusProps) {
   };
 
   return (
-    <div className="bg-gray-800 rounded-xl p-4 border border-gray-700 flex flex-col h-[500px]">
+    <div className="bg-gray-800 rounded-xl p-5 border border-gray-700 flex flex-col h-[525px]">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center space-x-4">
           <h2 className="text-lg font-bold text-white flex items-center">

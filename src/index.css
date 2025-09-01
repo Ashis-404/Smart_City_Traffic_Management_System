@@ -9,7 +9,9 @@
   }
 
   body {
-    @apply antialiased text-base sm:text-base;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 1rem;
   }
 }
 
@@ -34,29 +36,48 @@
 }
 
 /* Responsive container */
-.container {
-  @apply px-2 sm:px-4 md:px-6;
-  max-width: 100%;
-}
-
-@screen lg {
+@layer components {
   .container {
-    max-width: 1280px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    max-width: 100%;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      max-width: 90rem;
+    }
   }
 }
 
 /* Transitions */
 .transition-all {
-  @apply duration-200 ease-in-out;
+  transition-property: all;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
 }
 
 /* Mobile touch targets */
-@screen sm {
+@media (min-width: 640px) {
   button, 
   [role="button"],
   select,
   input {
-    @apply min-h-[44px];
+    min-height: 44px;
   }
 }
 

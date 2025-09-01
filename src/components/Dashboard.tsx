@@ -32,7 +32,7 @@ export function Dashboard({ emergencyMode }: DashboardProps) {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 ">
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <MetricCard
@@ -81,29 +81,35 @@ export function Dashboard({ emergencyMode }: DashboardProps) {
       </div>
 
       {/* AI Recommendations */}
-      <div className="mt-6 bg-gray-800 rounded-xl p-6">
+       <div className="mt-6 bg-gray-800 rounded-xl p-6">
         <h2 className="text-xl font-semibold text-white mb-4">AI Traffic Recommendations</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {metrics.signalEfficiency < 80 && (
-            <div className="bg-amber-900/50 rounded-lg p-4">
-              <h3 className="text-lg font-semibold text-white">Signal Timing Adjustment</h3>
-              <p className="text-gray-300">
-                Consider increasing green light duration for north-south traffic during peak hours.
+            <div className="bg-amber-900/50 rounded-lg p-4 animate-fadeIn">
+              <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                ⚡ Signal Timing Adjustment
+              </h3>
+              <p className="text-gray-300 text-sm">
+                Increase green light duration for north-south traffic during peak hours.
               </p>
             </div>
           )}
-          {metrics.avgWaitTime > 45 && (
-            <div className="bg-red-900/50 rounded-lg p-4">
-              <h3 className="text-lg font-semibold text-white">Congestion Alert</h3>
-              <p className="text-gray-300">
-                High wait times detected. Implementing emergency traffic flow patterns recommended.
+          {metrics.avgWaitTime > 30 && (
+            <div className="bg-red-900/50 rounded-lg p-4 animate-fadeIn">
+              <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                🚦 Congestion Alert
+              </h3>
+              <p className="text-gray-300 text-sm">
+                High wait times detected. Implement emergency traffic flow patterns.
               </p>
             </div>
           )}
           {metrics.emissionReduction < 20 && (
-            <div className="bg-emerald-900/50 rounded-lg p-4">
-              <h3 className="text-lg font-semibold text-white">Environmental Impact</h3>
-              <p className="text-gray-300">
+            <div className="bg-emerald-900/50 rounded-lg p-4 animate-fadeIn">
+              <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                🌿 Environmental Impact
+              </h3>
+              <p className="text-gray-300 text-sm">
                 Optimize signal timing to reduce vehicle idle time and improve air quality.
               </p>
             </div>
