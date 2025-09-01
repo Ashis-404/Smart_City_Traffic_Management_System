@@ -146,7 +146,27 @@ This project is licensed under the MIT License.
 
 ## 🎨 UI Screenshots
 
-[Screenshots to be added showing key features and interfaces]
+### Main Dashboard Views
+![Dashboard View 1](./images/dashboard1.png)
+*Main dashboard interface showing real-time traffic monitoring*
+
+![Dashboard View 2](./images/dashboard2.png)
+*Advanced analytics and traffic patterns visualization*
+
+![Dashboard View 3](./images/dashboard3.png)
+*Comprehensive city-wide traffic overview*
+
+### Traffic Control System
+![Traffic Control](./images/traffic_control.png)
+*Interactive traffic grid system with real-time signal control*
+
+### Emergency Response Interface
+![Emergency Control](./images/Emergency.png)
+*Emergency vehicle routing and priority signal management*
+
+### Environmental Monitoring
+![Environmental Stats](./images/Environment.png)
+*Real-time environmental metrics and impact analysis*
 
 ## 🏆 Hackathon Information
 
@@ -160,7 +180,7 @@ This project was developed for IOTricity S02 with the goal of creating an innova
 | Ashis Mahato | Frontend Developer | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/ashis-mahato-9733332b8/) | [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat&logo=github)](https://github.com/Ashis-404) |
 | Arnab Ghosh | Frontend Developer | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/arnab-ghosh-854854289/) | [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat&logo=github)](https://github.com/arnabg2005) |
 | Aritra Debnath | Ideation person  | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/aritradeb07/) | [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat&logo=github)](https://github.com/AritraDeb05) |
-| Debasmita Deb | Writer | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/debasmita-deb-7883392b8/) | [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat&logo=github)](#) |
+| Debasmita Deb | Writer | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/debasmita-deb-7883392b8/) | [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat&logo=github)](https://github.com/Debasmita-Deb-555) |
 
 
 
